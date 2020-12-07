@@ -86,7 +86,7 @@ export default {
 
 .v-modal {
   @apply bg-white shadow-sm flex flex-col;
-  @apply z-50 cursor-auto p-5;
+  @apply z-50 cursor-auto p-4;
   border-radius: .25rem;
 
   &__header {
