@@ -1,28 +1,42 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <button @click="handleClick" class="bg-blue-500 text-white py-2 px-4 rounded">Click Me</button>
+
+    <date-time-picker
+      v-if="showModal"
+      @close="handleClose"
+      />
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import './assets/scss/index.scss';
+import DateTimePicker from './components/DateTimePicker';
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    'date-time-picker': DateTimePicker
+  },
+  data() {
+    return {
+      showModal: false
+    }
+  },
+  methods: {
+    handleClick() {
+      this.showModal = true;
+    },
+    handleClose() {
+      this.showModal = false;
+    }
   }
 }
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+<style lang="scss" scoped>
+  #app {
+    @apply flex flex-col justify-center items-center;
+    height: 100vh;
+  }
 </style>
