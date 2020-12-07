@@ -4,6 +4,7 @@
 
     <date-time-picker
       v-if="showModal"
+      @update="handleUpdate"
       @close="handleClose"
       />
   </div>
@@ -26,6 +27,12 @@ export default {
   methods: {
     handleClick() {
       this.showModal = true;
+    },
+    handleUpdate(selected) {
+      console.log('selected date: ', selected.date.toDateString());
+      console.log('selected hour: ', selected.hour);
+      console.log('selected AM/PM: ', selected.ampm);
+      this.showModal = false;
     },
     handleClose() {
       this.showModal = false;

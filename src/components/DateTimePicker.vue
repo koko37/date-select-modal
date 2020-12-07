@@ -11,7 +11,7 @@
               <li
                 v-for="(date, index) in dates"
                 :key="index"
-                :class="activeDateId===index ? 'active' : ''"
+                :class="selected.date.toDateString()===date.val.toDateString() ? 'active' : ''"
                 @click="handleSelectDate(index)"
                 >
                 {{date.title}}
@@ -19,7 +19,9 @@
             </ul>
           </div>
           <div class="pl-6">
-            <v-calendar
+            <v-date-picker
+              v-model="selected.date"
+              @input="handleCalendarPick"
               color="blue"
               />
           </div>
@@ -46,7 +48,12 @@
             >
               Reset Date
           </button>
-          <button class="bg-blue-500 hover:bg-blue-700 text-white text-xs py-1 px-2 rounded">Update</button>
+          <button
+            class="bg-blue-500 hover:bg-blue-700 text-white text-xs py-1 px-2 rounded"
+            @click="handleUpdate"
+            >
+              Update
+          </button>
         </div>
       </div>
   </modal>
@@ -71,18 +78,16 @@ export default {
         { title: 'Next Month', val: nextMonth() },
         { title: 'Next Year', val: nextYear() },
       ],
-      activeDateId: -1,
       selected: {
         hour: 12,
         ampm: 'AM',
-        date: undefined
+        date: new Date()
       }
     }
   },
   methods: {
     handleSelectDate(id) {
-      this.activeDateId = id;
-      this.selected.date = this.dates[this.activeDateId].val;
+      this.selected.date = this.dates[id].val;
     },
     handleSelectHour(e) {
       this.selected.hour = e.target.value;
@@ -90,17 +95,20 @@ export default {
     handleSelectAmPm(e) {
       this.selected.ampm = e.target.value;
     },
+    handleCalendarPick() {
+    },
     handleResetDate() {
-      this.activeDateId = -1;
+      
+    },
+    handleUpdate() {
+      this.$emit('update', this.selected);
     },
     handleClose() {
       this.$emit('close');
     }
   },
-  computed: {
-    
-  },
   mounted() {
+    
   }
 }
 </script>

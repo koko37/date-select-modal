@@ -18,7 +18,7 @@ function nextMonth() {
 }
 function nextYear() { 
   const d = new Date();
-  d.setYear(d.getYear() + 1);
+  d.setFullYear(d.getFullYear() + 1);
   return d;
 }
 
