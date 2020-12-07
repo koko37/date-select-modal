@@ -4,17 +4,17 @@
     @close="handleClose"
     v-show="true"
     >
-      Lorem ipsum Hello World This is Tah<br/>
-      ABC
+      <v-calendar />
   </modal>
 </template>
 
 <script>
-import Modal from './Modal'
+import Modal from './Modal';
+
 export default {
   name: 'DateTimePicker',
   components: {
-    modal: Modal
+    'modal': Modal
   },
   data() {
     return {
