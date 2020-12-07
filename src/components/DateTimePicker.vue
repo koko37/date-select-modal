@@ -22,6 +22,8 @@
             <v-date-picker
               v-model="selected.date"
               @input="handleCalendarPick"
+              :from-date="selected.date"
+              :available-dates="[{start: previousDate}]"
               color="blue"
               />
           </div>
@@ -98,7 +100,7 @@ export default {
     handleCalendarPick() {
     },
     handleResetDate() {
-      
+      this.selected.date = new Date();
     },
     handleUpdate() {
       this.$emit('update', this.selected);
@@ -107,8 +109,12 @@ export default {
       this.$emit('close');
     }
   },
-  mounted() {
-    
+  computed: {
+    previousDate() {
+      const d = new Date();
+      d.setDate(d.getDate()-1);
+      return d;
+    }
   }
 }
 </script>
