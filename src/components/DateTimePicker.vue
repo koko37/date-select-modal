@@ -20,7 +20,7 @@
           </div>
           <div class="pl-6">
             <v-date-picker
-              v-model="selected.date"
+              :value="selected.date"
               @input="handleCalendarPick"
               :from-date="selected.date"
               :available-dates="[{start: previousDate}]"
@@ -97,7 +97,12 @@ export default {
     handleSelectAmPm(e) {
       this.selected.ampm = e.target.value;
     },
-    handleCalendarPick() {
+    handleCalendarPick(value) {
+      if(value.toDateString() === this.selected.date.toDateString()) {
+        this.selected.date = undefined;
+      } else {
+        this.selected.date = value;
+      }
     },
     handleResetDate() {
       this.selected.date = new Date();
