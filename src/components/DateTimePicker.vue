@@ -11,7 +11,7 @@
               <li
                 v-for="(date, index) in dates"
                 :key="index"
-                :class="selected.date.toDateString()===date.val.toDateString() ? 'active' : ''"
+                :class="selected.date.toDateString()===date.val.toDateString() && highlightDate ? 'active' : ''"
                 @click="handleSelectDate(index)"
                 >
                 {{date.title}}
@@ -20,11 +20,12 @@
           </div>
           <div class="pl-6">
             <v-date-picker
+              :color="highlightDate ? 'blue' : ''"
               :value="selected.date"
-              @input="handleCalendarPick"
               :from-date="selected.date"
               :available-dates="[{start: previousDate}]"
-              color="blue"
+              @input="handleDatePick"
+              @dayclick="handleDateClick"
               />
           </div>
         </div>
@@ -51,7 +52,9 @@
               Reset Date
           </button>
           <button
-            class="bg-blue-500 hover:bg-blue-700 text-white text-xs py-1 px-2 rounded"
+            class="text-white text-xs py-1 px-2 rounded"
+            :class="highlightDate ? 'bg-blue-500 hover:bg-blue-700' : 'bg-blue-300'"
+            :disabled="!highlightDate"
             @click="handleUpdate"
             >
               Update
@@ -80,6 +83,8 @@ export default {
         { title: 'Next Month', val: nextMonth() },
         { title: 'Next Year', val: nextYear() },
       ],
+      highlightDate: true,
+      dateChanged: false,
       selected: {
         hour: 12,
         ampm: 'AM',
@@ -90,6 +95,7 @@ export default {
   methods: {
     handleSelectDate(id) {
       this.selected.date = this.dates[id].val;
+      this.highlightDate = true;
     },
     handleSelectHour(e) {
       this.selected.hour = e.target.value;
@@ -97,12 +103,15 @@ export default {
     handleSelectAmPm(e) {
       this.selected.ampm = e.target.value;
     },
-    handleCalendarPick(value) {
-      if(value.toDateString() === this.selected.date.toDateString()) {
-        this.selected.date = undefined;
-      } else {
-        this.selected.date = value;
-      }
+    handleDatePick(date) {
+      // if clicked the same date, then this method will not be invoked.
+      this.selected.date = date;
+      this.dateChanged = true;
+    },
+    handleDateClick() {
+      // if clicked the same date, then only this method will be invoked.
+      this.highlightDate = this.dateChanged;
+      this.dateChanged = !this.dateChanged;
     },
     handleResetDate() {
       this.selected.date = new Date();
