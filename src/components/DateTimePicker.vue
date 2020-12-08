@@ -33,6 +33,7 @@
           <select
             class="border border-gray-300 hover:border-gray-500 focus:border-gray-500 text-gray-800 text-xs px-1 py-1 rounded mr-1"
             @change="handleSelectHour"
+            ref="selectHour"
             >
             <option v-for="hour in hours" :key="hour" :value="hour">
               {{`${hour} : 00`}}
@@ -40,6 +41,7 @@
           </select>
           <select
             class="border border-gray-300 hover:border-gray-500 focus:border-gray-500 text-gray-800 text-xs px-1 py-1 rounded mr-3"
+            ref="selectAmPm"
             @change="handleSelectAmPm"
             >
             <option>AM</option>
@@ -115,6 +117,12 @@ export default {
     },
     handleResetDate() {
       this.selected.date = new Date();
+      this.$refs.selectHour.options[0].selected = true;
+      this.selected.hour = 12;
+      this.$refs.selectAmPm.options[0].selected = true;
+      this.selected.ampm = 'AM';
+
+      this.highlightDate = true;
     },
     handleUpdate() {
       this.$emit('update', this.selected);
