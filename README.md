@@ -1,4 +1,7 @@
 # datetime-picker
+Reusable vue component to select date and time.
+
+<img src="./public/date-time-picker-modal.png" alt="screenshot" />
 
 ## Project setup
 ```
